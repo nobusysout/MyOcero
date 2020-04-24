@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Player.hpp"
+#include "Board.hpp"
 
 Player::Player()
 {
@@ -12,4 +13,17 @@ Player::Player(PlayerColor color) {
 
 Player::~Player()
 {
+}
+
+void Player::ChooseAction() {
+	int i = 1, j = 1;
+	while (chooseLoopFlag) {
+
+	}
+}
+ 
+void Player::CursorFlashingThread() {
+	while (chooseLoopFlag) {
+
+	}
 }
