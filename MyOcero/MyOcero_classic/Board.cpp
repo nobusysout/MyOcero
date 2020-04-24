@@ -1,13 +1,26 @@
 #include "pch.hpp"
 #include "Board.hpp"
 
-bool operator ==(SquareState ss, PlayerColor pc) {
+inline bool operator ==(SquareState ss, PlayerColor pc) {
 	if (((ss == SquareState::BLACK) && (pc == PlayerColor::BLACK)) ||
 		((ss == SquareState::WHITE) && (pc == PlayerColor::WHITE)))
 	{
 		return true;
 	}
 	return false;
+}
+inline bool operator !=(SquareState ss, PlayerColor pc) {
+	return !(ss == pc);
+}
+inline SquareState operator !(SquareState ss) {
+	if (ss == SquareState::BLACK) return SquareState::WHITE;
+	if (ss == SquareState::WHITE) return SquareState::BLACK;
+	return ss;
+}
+inline PlayerColor operator !(PlayerColor pc) {
+	if (pc == PlayerColor::BLACK) return PlayerColor::WHITE;
+	if (pc == PlayerColor::WHITE) return PlayerColor::BLACK;
+	return pc;
 }
 
 Board::Board()
@@ -46,7 +59,10 @@ void Board::ShowBoard() {
 
 
 bool Board::isFinish() {
-	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)) return true;
+	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)){
+		std::cout << "debug" << std::endl;
+		return true;
+	}
 	return false;
 }
 
@@ -55,13 +71,13 @@ bool Board::isPass(PlayerColor currentPlayer) {
 		for (int j = 0; j < 10; j++) {
 			Square square = (*squares)[i][j];
 			if (square.state == SquareState::NONE) {
-				if (canPut(currentPlayer)) {
-					return true;
+				if (canPut(currentPlayer,j,i)) {
+					return false;
 				}
 			}
 		}
 	}
-	return false;
+	return true;
 }
 
 int Board::CountPoint(PlayerColor color) {
@@ -101,11 +117,28 @@ void Board::ShowPoints(int bp, int wp) {
 	std::cout << "BLACK: " << bp << "  WHITE: " << wp << std::endl;
 }
 
-bool Board::canPut(PlayerColor pc) {
-	for (int i = 0; i < 3;i++) {
-		for (int j = 0; j < 3; j++) {
-
+bool Board::canPut(PlayerColor pc,int x,int y) {
+	if ((*squares)[y][x].state != SquareState::NONE) return false;
+	for (int i = 0; i < 8;i++) {
+		for (int j = 0; j < 8; j++) {
+			int dx = xdir[j];
+			int dy = ydir[i];
+			if (canPutSub(pc,dx,dy,x+dx,y+dy,0)) return true;
 		}
 	}
 	return false;
+}
+
+bool Board::canPutSub(PlayerColor pc,int dx,int dy,int x,int y,int counter) {
+	SquareState point = (*squares)[x][y].state;
+	if (point == !pc) {
+		counter++;
+		return canPutSub(pc,dx,dy,x+dx,y+dy,counter);
+	}
+	else if (point == pc) {
+		return counter == 0 ? false : true;
+	}
+	else {
+		return false;
+	}
 }

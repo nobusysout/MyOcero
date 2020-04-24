@@ -12,10 +12,13 @@ public:
 	void ShowBoard();
 	bool isFinish();
 	bool isPass(PlayerColor);
+	bool canPut(PlayerColor, int, int);
 	void JudgeWinner();
 	void ShowPoints();
 	void ShowPoints(int,int);
 private:
 	int CountPoint(PlayerColor);
-	bool canPut(PlayerColor);
+	bool canPutSub(PlayerColor,int,int,int,int,int);
+	int xdir[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+	int ydir[8] = { -1, -1, -1, 0, 0, 1, 1, 1 };
 };
