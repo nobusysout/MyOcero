@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.hpp"
+#include "Board.hpp"
 
 
 enum class PlayerColor {
@@ -10,11 +11,12 @@ class Player
 {
 public:
 	PlayerColor color;
+	Board *board;
 	bool chooseLoopFlag = true;
 	std::pair<int,int> cursor;
 	Player();
-	Player(PlayerColor color);
+	Player(PlayerColor,Board*);
 	~Player();
 	void ChooseAction();
-	void CursorFlashingThread();
+	void CursorFlashingThread(int,int);
 };

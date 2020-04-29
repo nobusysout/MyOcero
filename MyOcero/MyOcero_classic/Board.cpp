@@ -48,13 +48,22 @@ Board::~Board()
 {
 }
 
-void Board::ShowBoard() {
+void Board::ShowBoard(int x, int y, bool isMaskOn) {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
-			std::cout << (int)(*squares)[i][j].state;
+			if (isMaskOn && j == x && i == y) {
+				std::cout << " ";
+			}
+			else {
+				std::cout << (int)(*squares)[i][j].state;
+			}
 		}
 		std::cout << std::endl;
 	}
+}
+
+void Board::ShowBoard() {
+	ShowBoard(0,0,false);
 }
 
 

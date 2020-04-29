@@ -10,6 +10,7 @@ public:
 	Board();
 	~Board();
 	void ShowBoard();
+	void ShowBoard(int,int,bool);
 	bool isFinish();
 	bool isPass(PlayerColor);
 	bool canPut(PlayerColor, int, int);
