@@ -15,5 +15,5 @@ public:
 	Player(PlayerColor,Board*);
 	~Player();
 	void ChooseAction();
-	void CursorFlashingThread(int,int);
+	void CursorFlashingThread();
 };

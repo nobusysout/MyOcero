@@ -1,16 +1,12 @@
 #include "pch.hpp"
 #include "Player.hpp"
 #include "Board.hpp"
-#include <Windows.h>
-
-Player::Player()
-{
-	color = PlayerColor::BLACK;
-}
 
 Player::Player(PlayerColor color,Board *board) {
 	this->color = color;
 	this->board = board;
+	cursor.first = 1;
+	cursor.second = 1;
 }
 
 Player::~Player()
@@ -18,36 +14,40 @@ Player::~Player()
 }
 
 void Player::ChooseAction() {
-	int i = 1, j = 1;
-	bool firstFlag = true;
-	BYTE CurrentInputKeyInfo[256];
-	BYTE PreviousInputKeyInfo[256];
-	GetKeyboardState(PreviousInputKeyInfo);
+	int x = 1, y = 1;
+	chooseLoopFlag = true;
+	int s;
+	//std::thread FlashingThread(&Player::CursorFlashingThread,this);
 	while (chooseLoopFlag) {
-		GetKeyboardState(CurrentInputKeyInfo);
-		if (CurrentInputKeyInfo[VK_LEFT] & 0x80 && !(PreviousInputKeyInfo[VK_LEFT] & 0x80)) {
+		s = _getch();
+		if (s == 13) { //Enter
 
 		}
-		else if(CurrentInputKeyInfo[VK_UP] & 0x80 && !(PreviousInputKeyInfo[VK_UP] & 0x80)){
-
+		else if (s == 224) {
+			switch (s) {
+			case 72: //ª
+				break;
+			case 80: //«
+				break;
+			case 75: //©
+				break;
+			case 77: //¨
+				break;
+			}
 		}
-		else if (CurrentInputKeyInfo[VK_RIGHT] & 0x80 && !(PreviousInputKeyInfo[VK_RIGHT] & 0x80)) {
-
-		}
-		else if (CurrentInputKeyInfo[VK_DOWN] & 0x80 && !(PreviousInputKeyInfo[VK_DOWN] & 0x80)) {
-
-		}
-		else if (CurrentInputKeyInfo[VK_RETURN] & 0x80 && !(PreviousInputKeyInfo[VK_RETURN] & 0x80)) {
-
-		}
-		memcpy(PreviousInputKeyInfo,CurrentInputKeyInfo,sizeof(CurrentInputKeyInfo));
 	}
 }
- 
-void Player::CursorFlashingThread(int x,int y) {
+
+void Player::CursorFlashingThread() {
 	while (chooseLoopFlag) {
-		board->ShowBoard(x, y, true);
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		board->ShowBoard(x, y, false);
+		std::system("cls");
+		board->ShowBoard(cursor.first, cursor.second, true);
+		board->ShowPoints();
+		std::this_thread::sleep_for(std::chrono::milliseconds(750));
+		
+		std::system("cls");
+		board->ShowBoard(cursor.first, cursor.second, false);
+		board->ShowPoints();
+		std::this_thread::sleep_for(std::chrono::milliseconds(750));
 	}
 }

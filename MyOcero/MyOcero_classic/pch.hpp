@@ -5,5 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <string>
+#include <conio.h>
 
 #endif //PCH_H

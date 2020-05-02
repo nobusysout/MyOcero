@@ -66,8 +66,6 @@ void Board::ShowBoard(int x, int y, bool isMaskOn) {
 void Board::ShowBoard() {
 	ShowBoard(0,0,false);
 }
-
-
 bool Board::isFinish() {
 	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)){
 		std::cout << "debug" << std::endl;
@@ -121,9 +119,9 @@ void Board::JudgeWinner() {
 void Board::ShowPoints() {
 	int bp = CountPoint(PlayerColor::BLACK);
 	int wp = CountPoint(PlayerColor::WHITE);
-	std::cout << "BLACK: " << bp << "  WHITE: " << wp << std::endl;
+	ShowPoints(bp,wp);
 }
-void Board::ShowPoints(int bp, int wp) {
+inline void Board::ShowPoints(int bp, int wp) {
 	std::cout << "BLACK: " << bp << "  WHITE: " << wp << std::endl;
 }
 

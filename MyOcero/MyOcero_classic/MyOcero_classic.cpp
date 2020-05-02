@@ -6,10 +6,14 @@ int main()
 {
 	//初期化
 	Board *board = new Board();
-	board->ShowBoard();
-	board->ShowPoints();
 	Player *player1 = new Player(PlayerColor::BLACK,board);
 	Player *player2 = new Player(PlayerColor::WHITE,board);
+	//調査
+	int i = 0;
+	while (1) {
+		i = _getch();
+		std::cout << i << std::endl;
+	}
 	//ゲーム
 	Player *turnPlayer = player1;
 	while (!board->isFinish()) {
