@@ -1,7 +1,9 @@
 #pragma once
 #include "pch.hpp"
 #include "Square.hpp"
-#include "Player.hpp"
+#include "PlayerColor.hpp"
+
+class Player;
 
 class Board
 {

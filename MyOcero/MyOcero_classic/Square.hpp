@@ -1,9 +1,6 @@
 #pragma once
 #include "pch.hpp"
-
-enum class SquareState {
-	NONE, BLACK, WHITE, BANNED,
-};
+#include "SquareState.hpp"
 
 class Square
 {

@@ -1,11 +1,8 @@
 #pragma once
 #include "pch.hpp"
-#include "Board.hpp"
+#include "PlayerColor.hpp"
 
-
-enum class PlayerColor {
-	BLACK, WHITE,
-};
+class Board;
 
 class Player
 {

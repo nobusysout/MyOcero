@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Board.hpp"
+#include "PlayerColor.hpp"
 
 inline bool operator ==(SquareState ss, PlayerColor pc) {
 	if (((ss == SquareState::BLACK) && (pc == PlayerColor::BLACK)) ||

@@ -154,7 +154,9 @@
     <ClInclude Include="Board.hpp" />
     <ClInclude Include="pch.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="PlayerColor.hpp" />
     <ClInclude Include="Square.hpp" />
+    <ClInclude Include="SquareState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
