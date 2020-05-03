@@ -51,7 +51,7 @@ void Player::ChooseAction() {
 		ps = s;
 	}
 	FlashingThread.detach();
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(600));
 }
 
 void Player::CursorFlashingThread() {
@@ -60,12 +60,12 @@ void Player::CursorFlashingThread() {
 		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "‚ÌŽè”Ô" << std::endl;
 		board->ShowBoard(cursor.first, cursor.second, true);
 		board->ShowPoints();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(400));
 		
 		std::system("cls");
 		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "‚ÌŽè”Ô" << std::endl;
 		board->ShowBoard(cursor.first, cursor.second, false);
 		board->ShowPoints();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	}
 }

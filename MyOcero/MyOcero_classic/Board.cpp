@@ -43,7 +43,6 @@ Board::Board()
 	}
 }
 
-
 Board::~Board()
 {
 }
@@ -52,10 +51,28 @@ void Board::ShowBoard(int x, int y, bool isMaskOn) {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (isMaskOn && j == x && i == y) {
-				std::cout << " ";
+				std::cout << "@";
 			}
 			else {
-				std::cout << (int)(*squares)[i][j].state;
+				std::string s;
+				switch ((*squares)[i][j].state) {
+					case SquareState::BANNED:
+						s = "~";
+						break;
+					case SquareState::BLACK:
+						s = "›";
+						break;
+					case SquareState::NONE:
+						s = "E";
+						break;
+					case SquareState::WHITE:
+						s = "œ";
+						break;
+					default:
+						s = "E";
+						break;
+				}
+				std::cout << s;
 			}
 		}
 		std::cout << std::endl;
@@ -65,6 +82,7 @@ void Board::ShowBoard(int x, int y, bool isMaskOn) {
 void Board::ShowBoard() {
 	ShowBoard(0,0,false);
 }
+
 bool Board::isFinish() {
 	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)){
 		std::cout << "Finish!" << std::endl;
