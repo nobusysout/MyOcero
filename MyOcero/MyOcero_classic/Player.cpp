@@ -17,14 +17,17 @@ void Player::ChooseAction() {
 	int *x = &cursor.first;
 	int *y = &cursor.second;
 	chooseLoopFlag = true;
-	int s;
+	int s,ps=0;
 	std::thread FlashingThread(&Player::CursorFlashingThread,this);
 	while (chooseLoopFlag) {
 		s = _getch();
-		if (s == 13) { //Enter
-			std::cout << "Enter" << std::endl;
+		if (s == 13 && ps!=13) { //Enter
+			if (board->canPut(color,*x,*y)) {
+				board->PutStone(color,*x,*y);
+				chooseLoopFlag = false;
+			}
 		}
-		else if (s == 224) {
+		else if (s == 224 && ps!=224) {
 			s = _getch();
 			switch (s) {
 			case 72: //Å™
@@ -45,18 +48,22 @@ void Player::ChooseAction() {
 				break;
 			}
 		}
+		ps = s;
 	}
 	FlashingThread.detach();
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 void Player::CursorFlashingThread() {
 	while (chooseLoopFlag) {
 		std::system("cls");
+		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "ÇÃéËî‘" << std::endl;
 		board->ShowBoard(cursor.first, cursor.second, true);
 		board->ShowPoints();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		
 		std::system("cls");
+		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "ÇÃéËî‘" << std::endl;
 		board->ShowBoard(cursor.first, cursor.second, false);
 		board->ShowPoints();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));

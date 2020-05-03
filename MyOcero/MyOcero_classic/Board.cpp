@@ -67,7 +67,7 @@ void Board::ShowBoard() {
 }
 bool Board::isFinish() {
 	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)){
-		std::cout << "debug" << std::endl;
+		std::cout << "Finish!" << std::endl;
 		return true;
 	}
 	return false;
@@ -127,21 +127,37 @@ inline void Board::ShowPoints(int bp, int wp) {
 bool Board::canPut(PlayerColor pc,int x,int y) {
 	if ((*squares)[y][x].state != SquareState::NONE) return false;
 	for (int i = 0; i < 8;i++) {
-		for (int j = 0; j < 8; j++) {
-			int dx = xdir[j];
-			int dy = ydir[i];
-			if (canPutSub(pc,dx,dy,x+dx,y+dy,0)) return true;
-		}
+		int dx = xdir[i];
+		int dy = ydir[i];
+		if (canPutSub(pc,dx,dy,x+dx,y+dy,0)) return true;
 	}
 	return false;
 }
 
 bool Board::isMovable(int x, int y) {
-	return (*squares)[y][x].state == SquareState::NONE;
+	return !((*squares)[y][x].state == SquareState::BANNED);
+}
+
+void Board::PutStone(PlayerColor color,int x,int y) {
+	int fx = x, fy = y;
+	for (int i = 0 ; i < 8; i++) {
+		int dx = xdir[i];
+		int dy = ydir[i];
+		if (canPutSub(color, dx, dy, x + dx, y + dy, 0)) {
+			while ((*squares)[y + dy][x + dx].state == !color) {
+				(*squares)[y + dy][x + dx].state = (color == PlayerColor::BLACK) ? SquareState::BLACK : SquareState::WHITE;
+				x += dx;
+				y += dy;
+			}
+		}
+		x = fx;
+		y = fy;
+	}
+	(*squares)[y][x].state = (color == PlayerColor::BLACK) ? SquareState::BLACK : SquareState::WHITE;
 }
 
 bool Board::canPutSub(PlayerColor pc,int dx,int dy,int x,int y,int counter) {
-	SquareState point = (*squares)[x][y].state;
+	SquareState point = (*squares)[y][x].state;
 	if (point == !pc) {
 		counter++;
 		return canPutSub(pc,dx,dy,x+dx,y+dy,counter);
