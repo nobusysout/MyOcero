@@ -16,6 +16,7 @@ public:
 	bool isFinish();
 	bool isPass(PlayerColor);
 	bool canPut(PlayerColor, int, int);
+	bool isMovable(int,int);
 	void JudgeWinner();
 	void ShowPoints();
 	void ShowPoints(int,int);

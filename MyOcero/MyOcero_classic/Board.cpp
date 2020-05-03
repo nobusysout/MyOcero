@@ -1,6 +1,5 @@
 #include "pch.hpp"
 #include "Board.hpp"
-#include "PlayerColor.hpp"
 
 inline bool operator ==(SquareState ss, PlayerColor pc) {
 	if (((ss == SquareState::BLACK) && (pc == PlayerColor::BLACK)) ||
@@ -135,6 +134,10 @@ bool Board::canPut(PlayerColor pc,int x,int y) {
 		}
 	}
 	return false;
+}
+
+bool Board::isMovable(int x, int y) {
+	return (*squares)[y][x].state == SquareState::NONE;
 }
 
 bool Board::canPutSub(PlayerColor pc,int dx,int dy,int x,int y,int counter) {
