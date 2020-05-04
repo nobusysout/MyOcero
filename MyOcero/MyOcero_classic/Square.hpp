@@ -6,6 +6,7 @@ class Square
 {
 public:
 	SquareState state;
+
 	Square();
 	~Square();
 };

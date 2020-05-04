@@ -41,10 +41,29 @@ Board::Board()
 			(*squares)[i][j].state = target;
 		}
 	}
+	wasPassed = false;
+	isFinished = false;
 }
 
 Board::~Board()
 {
+}
+
+void Board::UpdateGameScreen(int x,int y,bool isMaskOn,PlayerColor color) {
+	std::system("cls");
+	if (!isFinished) {
+		std::cout << ((color == PlayerColor::BLACK) ? "BLACK" : "WHITE") << "の手番" << std::endl;
+	}
+	ShowBoard(x, y, isMaskOn);
+	if (isFinished) {
+		std::cout << "Finish!" << std::endl;
+	}
+	else {
+		ShowPoints();
+	}
+	if (wasPassed) {
+		std::cout << ((color == PlayerColor::BLACK) ? "WHITE" : "BLACK") << "　はパスです！" << std::endl;
+	}
 }
 
 void Board::ShowBoard(int x, int y, bool isMaskOn) {
@@ -85,7 +104,7 @@ void Board::ShowBoard() {
 
 bool Board::isFinish() {
 	if (isPass(PlayerColor::BLACK) && isPass(PlayerColor::WHITE)){
-		std::cout << "Finish!" << std::endl;
+		isFinished = true;
 		return true;
 	}
 	return false;

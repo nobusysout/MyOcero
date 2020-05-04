@@ -11,6 +11,7 @@ public:
 	Board *board;
 	bool chooseLoopFlag = true;
 	std::pair<int,int> cursor;
+
 	Player(PlayerColor,Board*);
 	~Player();
 	void ChooseAction();

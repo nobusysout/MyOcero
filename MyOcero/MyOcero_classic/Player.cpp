@@ -51,21 +51,15 @@ void Player::ChooseAction() {
 		ps = s;
 	}
 	FlashingThread.detach();
-	std::this_thread::sleep_for(std::chrono::milliseconds(600));
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 void Player::CursorFlashingThread() {
 	while (chooseLoopFlag) {
-		std::system("cls");
-		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "‚ÌŽè”Ô" << std::endl;
-		board->ShowBoard(cursor.first, cursor.second, true);
-		board->ShowPoints();
-		std::this_thread::sleep_for(std::chrono::milliseconds(400));
+		board->UpdateGameScreen(cursor.first, cursor.second, true, color);
+		std::this_thread::sleep_for(std::chrono::milliseconds(300));
 		
-		std::system("cls");
-		std::cout << ((color == PlayerColor::BLACK) ? "Black" : "White") << "‚ÌŽè”Ô" << std::endl;
-		board->ShowBoard(cursor.first, cursor.second, false);
-		board->ShowPoints();
+		board->UpdateGameScreen(cursor.first, cursor.second, false, color);
 		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 	}
 }

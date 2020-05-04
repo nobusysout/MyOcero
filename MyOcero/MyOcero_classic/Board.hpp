@@ -11,6 +11,9 @@ public:
 	std::vector<std::vector<Square>> *squares;
 	Board();
 	~Board();
+	bool wasPassed;
+
+	void UpdateGameScreen(int,int,bool,PlayerColor);
 	void ShowBoard();
 	void ShowBoard(int,int,bool);
 	bool isFinish();
@@ -22,6 +25,8 @@ public:
 	void ShowPoints();
 	void ShowPoints(int,int);
 private:
+	bool isFinished;
+
 	int CountPoint(PlayerColor);
 	bool canPutSub(PlayerColor,int,int,int,int,int);
 	int xdir[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
